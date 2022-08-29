@@ -1,0 +1,280 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "definitions": {
+        "EventType": {
+            "enum": [
+                "ACTIVE",
+                "COMPLETED",
+                "COURIER_MISSING",
+                "CREATED",
+                "FAILED",
+                "NEED_COURIER",
+                "PLANNED",
+                "PRIORITY",
+                "STARTED"
+            ],
+            "type": "string"
+        },
+        "OrderStatus": {
+            "enum": [
+                "ACTIVE",
+                "COMPLETED",
+                "COURIER_MISSING",
+                "CREATED",
+                "FAILED",
+                "NEED_COURIER",
+                "PLANNED",
+                "PRIORITY",
+                "STARTED"
+            ],
+            "type": "string"
+        },
+        "Payload": {
+            "properties": {
+                "data": {
+                    "properties": {
+                        "order": {
+                            "$ref": "#/definitions/WebhookOrder"
+                        },
+                        "organization": {
+                            "properties": {
+                                "id": {
+                                    "type": "string"
+                                }
+                            },
+                            "required": [
+                                "id"
+                            ],
+                            "type": "object"
+                        }
+                    },
+                    "required": [
+                        "order",
+                        "organization"
+                    ],
+                    "type": "object"
+                },
+                "namespace": {
+                    "enum": [
+                        "ORDER"
+                    ],
+                    "type": "string"
+                },
+                "type": {
+                    "$ref": "#/definitions/EventType"
+                }
+            },
+            "required": [
+                "data",
+                "namespace",
+                "type"
+            ],
+            "type": "object"
+        },
+        "WebhookOrder": {
+            "properties": {
+                "completedAt": {
+                    "type": "number"
+                },
+                "courierId": {
+                    "type": "number"
+                },
+                "createdAt": {
+                    "type": "number"
+                },
+                "eta": {
+                    "properties": {
+                        "current": {
+                            "properties": {
+                                "arrival": {
+                                    "type": "number"
+                                }
+                            },
+                            "required": [
+                                "arrival"
+                            ],
+                            "type": "object"
+                        },
+                        "initial": {
+                            "properties": {
+                                "arrival": {
+                                    "type": "number"
+                                }
+                            },
+                            "required": [
+                                "arrival"
+                            ],
+                            "type": "object"
+                        }
+                    },
+                    "required": [
+                        "current",
+                        "initial"
+                    ],
+                    "type": "object"
+                },
+                "failedAt": {
+                    "type": "number"
+                },
+                "failureNote": {
+                    "type": "string"
+                },
+                "failureReason": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "merchantOrderId": {
+                    "type": "string"
+                },
+                "organizationId": {
+                    "type": "string"
+                },
+                "startAfter": {
+                    "type": "number"
+                },
+                "startedAt": {
+                    "type": "number"
+                },
+                "status": {
+                    "$ref": "#/definitions/OrderStatus"
+                },
+                "tasks": {
+                    "properties": {
+                        "dropOff": {
+                            "$ref": "#/definitions/WebhookTask"
+                        },
+                        "pickup": {
+                            "$ref": "#/definitions/WebhookTask"
+                        }
+                    },
+                    "required": [
+                        "dropOff",
+                        "pickup"
+                    ],
+                    "type": "object"
+                }
+            },
+            "required": [
+                "createdAt",
+                "id",
+                "merchantOrderId",
+                "organizationId",
+                "status",
+                "tasks"
+            ],
+            "type": "object"
+        },
+        "WebhookTask": {
+            "properties": {
+                "address": {
+                    "properties": {
+                        "address": {
+                            "type": "string"
+                        },
+                        "contactName": {
+                            "type": "string"
+                        },
+                        "contactPhone": {
+                            "type": "string"
+                        },
+                        "coordinates": {
+                            "items": {
+                                "type": "number"
+                            },
+                            "type": "array"
+                        },
+                        "notes": {
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "address",
+                        "contactName",
+                        "contactPhone",
+                        "coordinates"
+                    ],
+                    "type": "object"
+                },
+                "eta": {
+                    "properties": {
+                        "current": {
+                            "properties": {
+                                "arrival": {
+                                    "type": "number"
+                                }
+                            },
+                            "required": [
+                                "arrival"
+                            ],
+                            "type": "object"
+                        },
+                        "initial": {
+                            "properties": {
+                                "arrival": {
+                                    "type": "number"
+                                }
+                            },
+                            "required": [
+                                "arrival"
+                            ],
+                            "type": "object"
+                        }
+                    },
+                    "required": [
+                        "current",
+                        "initial"
+                    ],
+                    "type": "object"
+                },
+                "id": {
+                    "type": "number"
+                },
+                "status": {
+                    "type": "string"
+                },
+                "taskType": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "address",
+                "id",
+                "status",
+                "taskType"
+            ],
+            "type": "object"
+        }
+    },
+    "properties": {
+        "environment": {
+            "type": "string"
+        },
+        "groupId": {
+            "type": "string"
+        },
+        "id": {
+            "type": "string"
+        },
+        "payload": {
+            "$ref": "#/definitions/Payload"
+        },
+        "timestamp": {
+            "type": "number"
+        },
+        "webhookId": {
+            "type": "string"
+        }
+    },
+    "required": [
+        "environment",
+        "groupId",
+        "id",
+        "payload",
+        "timestamp",
+        "webhookId"
+    ],
+    "type": "object"
+}
+
