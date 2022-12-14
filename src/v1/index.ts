@@ -73,6 +73,7 @@ export interface WebhookOrder {
 		pickup: WebhookTask
 		dropOff: WebhookTask
 	}
+	stickerLink: string | null
 }
 
 export interface Payload {
