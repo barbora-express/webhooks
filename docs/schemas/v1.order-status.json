@@ -140,6 +140,9 @@
                 "status": {
                     "$ref": "#/definitions/OrderStatus"
                 },
+                "stickerDownloadUrl": {
+                    "type": "string"
+                },
                 "tasks": {
                     "properties": {
                         "dropOff": {
@@ -162,6 +165,7 @@
                 "merchantOrderId",
                 "organizationId",
                 "status",
+                "stickerDownloadUrl",
                 "tasks"
             ],
             "type": "object"
